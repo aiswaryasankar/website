@@ -1,0 +1,29 @@
+---
+layout: page
+short_name: probability
+name: Probability & Random Processes
+permalink: /probability.html
+image: /stock_images/probability.png
+---
+<style>
+div.text {
+  padding-left: 50px;
+}
+</style>
+These articles are all inspired by EE126: Probability and Random Processes. I took the course Spring 2018 under Professor Kannan Ramachandran and found it to be very conceptually interesting. I've enjoyed writing problems for some of the main ideas in the course. Most of these problems are inspired by my time working in the BAIR research lab. Also as I learn more probability theory I plan to add questions on topics that may not be covered by EE126.
+<br><br>
+<hr>
+<br>
+
+<div>
+{% assign filtered_posts = site.posts | where: "topic", page.short_name %}
+  {% for post in filtered_posts %}
+     <h4 ><a href="{{ post.url }}">{{ post.title }}</a></h4>
+     <div class=text>
+     	<p>{{ post.excerpt | markdownify }}</p>
+     </div>
+{% endfor %}
+</div>
+
+
+

@@ -1,0 +1,31 @@
+---
+layout: page
+short_name: AI
+name: Artificial Intelligence
+permalink: /AI.html
+image: /stock_images/mdp_2.png
+---
+
+I loved this course. Here's how I tied it into medicine. I would love to work on it more in the future.
+
+<style>
+div.text {
+  padding-left: 50px;
+}
+</style>
+
+<br><br>
+<br>
+<hr>
+<br><br>
+<div>
+{% assign filtered_posts = site.posts | where: "topic", page.short_name %}
+  {% for post in filtered_posts %}
+     <h4 ><a href="{{ post.url }}">{{ post.title }}</a></h4>
+     <div class=text>
+     	<p>{{ post.excerpt | markdownify }}</p>
+     </div>
+{% endfor %}
+</div>
+
+

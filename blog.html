@@ -1,0 +1,33 @@
+---
+layout: default
+title: Blog
+---
+<br>
+<style>
+div.title {
+  padding-left: 50px;
+}
+
+div.course_name {
+  padding-left: 75px;
+}
+
+div.text {
+  padding-left:100px;
+}
+</style>
+
+<div class="title">
+<h1>Aiswarya.Interests</h1>
+</div>
+<br>
+<br>
+  {% for topic in site.topics %}
+      <div class="course_name"><h2><a href="{{ topic.url }}">{{ topic.name }}</a></h2></div>
+      <br>
+      <center><img src="{{topic.image}}" style="padding-left:25px;"></center>
+      <br><br>
+      <div class="text">
+      <p>{{ topic.excerpt | markdownify }}</p></div>
+      <br><br>
+  {% endfor %}
