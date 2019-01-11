@@ -4,5 +4,21 @@
     .image-gallery a span {display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; padding: 3px 0;}
     .image-gallery a img {width: 100%; display: block;}
 </style>
+<p class="image-gallery"><a href="/images/pic1.jpg" title="Beautiful Mountains"><img src="//images.weserv.nl/?url=jekyllcodex.org/images/pic1.jpg&amp;w=300&amp;h=300&amp;output=jpg&amp;q=50&amp;t=square" alt="Beautiful Mountains" title="Beautiful Mountains" /><span>Beautiful Mountains</span></a><a href="/images/reservoir.jpg" title="Museum of Pop Culture"><img src="//images.weserv.nl/?url=jekyllcodex.org/images/reservoir.jpg&amp;w=300&amp;h=300&amp;output=jpg&amp;q=50&amp;t=square" alt="Museum of Pop Culture" title="Museum of Pop Culture" /><span>Museum of Pop Culture</span></a><a href="/images/reservoir.jpg" title="Seattle View"><img src="//images.weserv.nl/?url=jekyllcodex.org/images/reservoir.jpg&amp;w=300&amp;h=300&amp;output=jpg&amp;q=50&amp;t=square" alt="Seattle View" title="Seattle View" /><span>Seattle View</span></a><a href="/images/sunset.jpg" title="Seattle by Night"><img src="//images.weserv.nl/?url=jekyllcodex.org/images/sunset.jpg&amp;w=300&amp;h=300&amp;output=jpg&amp;q=50&amp;t=square" alt="Seattle by Night" title="Seattle by Night" /><span>Seattle by Night</span></a><a href="/images/reservoir.jpg" title="Space Needle"><img src="//images.weserv.nl/?url=jekyllcodex.org/images/reservoir.jpg&amp;w=300&amp;h=300&amp;output=jpg&amp;q=50&amp;t=square" alt="Space Needle" title="Space Needle" /><span>Space Needle</span></a></p>
 
-<p class="image-gallery">{% for file in site.static_files %}{% if file.path contains include.folder %}{% if file.extname == '.jpg' or file.extname == '.jpeg' or file.extname == '.JPG' or file.extname == '.JPEG' %}{% assign filenameparts = file.path | split: "/" %}{% assign filename = filenameparts | last | replace: file.extname,"" %}<a href="{{ file.path }}" title="{{ filename }}"><img src="//images.weserv.nl/?url={{ site.url | replace: 'http://','' | replace: 'https://','' }}{{ file.path }}&w=300&h=300&output=jpg&q=50&t=square" alt="{{ filename }}" title="{{ filename }}" /><span>{{ filename }}</span></a>{% endif %}{% endif %}{% endfor %}</p>
+<div class="image-gallery">
+	{% for file in site.static_files %}
+		{% if file.path contains include.folder %}
+			{% if file.extname == '.jpg' or file.extname == '.jpeg' or file.extname == '.JPG' or file.extname == '.JPEG' %}
+
+			{% assign filenameparts = file.path | split: "/" %}
+			{% assign filename = filenameparts | last | replace: file.extname,"" %}
+
+			<a href="{{ file.path }}" title="{{ filename }}">
+				<img src="//images.weserv.nl/?url={{ site.url | replace: 'http://','' | replace: 'https://','' }}{{ file.path }}&w=300&h=300&output=jpg&q=50&t=square" alt="{{ filename }}" title="{{ filename }}" />
+				<span>{{ filename }}</span>
+			</a>
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+</div>

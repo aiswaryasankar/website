@@ -4,13 +4,14 @@ title: Where lunch?
 date:   2018-12-30 11:43:09 -0800
 categories: jekyll update
 topic: probability
+image: /stock_images/ctmc_poisson.png
 ---
 
 People arrive independently and at random times to work in the research lab. From observation, I've come to expect that $$\lambda$$ people arrive there to work per hour. On a given day, everyone there decides to get lunch at one of the $$m$$ restaurants nearby. If we each choose where to eat independently and we have an equal probability of choosing each restaurant, can we figure out the expected number of different restaurants we go to?
 
 <hr>
 <br><br>
-Ok first in order to start figuring out the expected number of restaurants visited, we need a way to determine the probability that there are some number $$k$$ people going to get food.  All we know is that during a given hour, I expect $$n$$ people to arrive and that they arrive independently and randomly.  Given this, at any given instant <b>can I compute the probability that $$k$$ people have arrived?</b>  <br>
+Ok first the expected number of restaurants visited will naturally depend on the number of people that go to get food.  All we know is that during a given hour, I expect $$\lambda$$ people to arrive and that they arrive independently and randomly.  Given this, at any given instant <b>can I compute the probability that $$k$$ people have arrived?</b>  <br>
 Once I know the probability that there are a certain number, $$k$$ people going to get food I then need to determine the expected number of restaurants they visit.  Now each of these $$n$$ people individually choose the restaurant they want to eat at with equal probability.  If two people choose the same place, the expected number of places they visit remains the same. Given that the group splits off to get food from their desired location, <b>how can we compute the expected number of restaurants they visit?</b>
 <br><br>
 <h3>The Poisson</h3>

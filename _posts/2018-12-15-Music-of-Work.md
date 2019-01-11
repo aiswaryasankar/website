@@ -4,6 +4,7 @@ title:  The Music of Work
 date:   2018-12-15 11:43:09 -0800
 categories: jekyll update
 topic: probability
+image: /stock_images/MC_music.png
 ---
 
 I love listening to music while I work, if I replace my playlist with some probability every day how many days can I expect my playlist to last?

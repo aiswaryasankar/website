@@ -1,9 +1,10 @@
-- name: About
+- name: Home
   link: /
 - name: Blog
   link: /blog.html
 - name: Experience
   link: /experience.html
-# - name: Gallery
-#   link: /gallery.html
-
+- name: Gallery
+  link: /gallery.html
+- name: Books
+  link: /books.html

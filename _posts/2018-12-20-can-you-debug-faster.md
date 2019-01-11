@@ -4,6 +4,7 @@ title: Debug Faster Please..
 date:   2018-12-20 11:43:09 -0800
 categories: jekyll update
 topic: probability
+image: /stock_images/exp_function.png
 ---
 
 My three friends and I have only 5 more hours to finish debugging our last and final OS project. It's been over 16 hours of working on it non stop and all we want is to get the last test case to pass. We take a moment to be meta about our situation.  If each of us have our own "bug fixing" rates and we team up to tackle different parts of the project, is finishing realistic?  Can we actually compute the expected time it'll take us to complete the project?
