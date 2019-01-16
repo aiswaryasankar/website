@@ -12,11 +12,10 @@ My three friends and I have only 5 more hours to finish debugging our last and f
 <br>
 <hr>
 <br>
-<h3>Problem setup</h3>
 First we have to figure out a realistic way to model this problem.
 <br>
 <br>
-<b><i>How do we actually model the probability that I fix a bug as a function of time?</i></b> If you watch anyone debug code, for some extended period of time it just looks like he or she is staring at the code, typing things in here and there and often complaining. But then at some instant they transition from being in this staring/ typing/ complaining state to being in the 'bug fixed' state. Essentially a bug isn't fixed until the exact moment it is. Thus we need to figure out - how can we accurately model this probability of reaching the 'fixed' state as a function of time.
+<b><i>First off, how do we actually model the probability that I fix a bug as a function of time?</i></b> If you watch anyone debug code, for some extended period of time it just looks like he or she is staring at the code, typing things in here and there and often complaining. But then at some instant they transition from being in this staring/ typing/ complaining state to being in the 'bug fixed' state. Essentially a bug isn't fixed until the exact moment it is. Thus we need to figure out - how can we accurately model this probability of reaching the 'fixed' state as a function of time.
 <br>
 <br>
 Then we know that each person likely has a different 'bug fixing' rate.  Given that I've recorded the amound of time it took me to fix each of $$n$$ bugs, <b><i>how can I determine my most likely 'bug fixing' rate?</i></b> Let's let $$X$$ be a random variable representing the amount of time it took me to fix each bug. Thus $$X_1 = $$ time to fix bug 1, $$X_2 = $$ time to fix bug 2, etc. We assume that each is completely independent of each other. Solving one issue doesn't influence any of the other problems.
