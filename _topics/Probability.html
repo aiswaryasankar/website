@@ -10,7 +10,8 @@ div.text {
   padding-left: 50px;
 }
 </style>
-These articles cover topics in EE126: Probability and Random Processes which I took Spring 2018 under Professor Kannan Ramachandrann. Over the last two years I've been very fortunate to work in the BAIR research lab, these problems are inspired from my time there.  Also as I learn more probability theory I plan to add questions on topics that may not be covered by EE126!
+<br>
+These articles cover topics in EE126: Probability and Random Processes which I took Spring 2018 under Professor Kannan Ramachandrann. I found the course challenging the first time around but a great friend got me to go over it again so I'd appreciate it more. Think I am :). Also over the last two years I've been very fortunate to work in the BAIR research lab - these problems are inspired from my time there.  (As I learn more probability theory I plan to add questions on topics that may not be covered by the course!)
 <br><br>
 <hr>
 <br>
@@ -25,6 +26,7 @@ These articles cover topics in EE126: Probability and Random Processes which I t
      <div class=text>
      	<p>{{ post.excerpt | markdownify }}</p>
      </div>
+     <div align="right"><p>{{ post.date | date: '%B %d, %Y' }}</p></div>
      <br><br><br>
 {% endfor %}
 </div>

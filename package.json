@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "isotope": "^1.0.0-alpha.3",
+    "jquery": "^3.3.1",
+    "lightbox": "^0.5.0",
+    "lightbox2": "^2.10.0",
+    "lightgallery": "^1.6.11"
+  }
+}
