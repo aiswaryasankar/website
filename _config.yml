@@ -23,7 +23,7 @@ twitter_username: aiswarya_sankar
 github_username:  aiswaryasankar
 
 disqus:
-    shortname: www-aiswaryas-com
+  shortname: www-aiswaryas-com
 
 # Build settings
 markdown: kramdown
