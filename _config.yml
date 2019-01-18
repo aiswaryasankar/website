@@ -17,8 +17,8 @@ title:      o.O
 email: aiswarya.s@berkeley.edu
 description: >- # this means to ignore newlines until "baseurl:"
   Here's to sharing interesting things I learn!
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/" # the subpath of your site, e.g. /blog
+url: "http://aiswaryas.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: aiswarya_sankar
 github_username:  aiswaryasankar
 
