@@ -9,8 +9,6 @@ image: /stock_images/MC_music.png
 
 I love listening to music while I work, but often times I find myself listening to the same songs over and over again.  If I replace my playlist with some probability every day, how many days can I expect my playlist to last?
 
-Often I need music to get myself to start working. I usually end up listening to the same songs repeatedly until I can't stand them any more. I'd say on average, I have an 8% chance of completely replacing my music playlist on any given day. After a month, if I haven't replaced my playlist yet, I replace it for sure. How many days can I expect my music playlist to last?
-
 <br>
 <center><hr width="50%"></center>
 <br>

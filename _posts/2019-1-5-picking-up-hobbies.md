@@ -13,14 +13,14 @@ Who needs hobbies when you can work all day? :) Unfortunately, perhaps, we aren'
 <hr>
 <br>
 
-The first thing I see in trying to figure this out is that there seems to be 2 random factors. The people arrive randomly and independently which leads me to belive we can model their arrivals as a Poisson process, but then the amount of time spent doing the hobby together is also random. Given both of these factors, we want to find the total expected amount of time spent.  <i><b>How can we compute the expected value of a random variable that depends on the number of events from a Poisson process?</b></i>
+The first thing I see in trying to figure this out is that there seems to be 2 random factors. The people arrive randomly and independently which leads me to believe we can model their arrivals as a Poisson process.  The amount of time spent doing the hobby together is also random. Given both of these factors, we want to find the total expected amount of time spent.  <i><b>How can we compute the expected value of a random variable that depends on the number of events from a Poisson process?</b></i>
 
 <br>
 ![Compound Poisson Process](/stock_images/compound_poisson.png){:style="float: center;margin-left: 150px; margin-top: 7px :height="550px" width="450px" :class="img-responsive"}
 
 <br><br>
 
-Well whenever the value of one variable depends on the value of another we can use conditional expectation. This would be the expected amount of money spent given that we know $$n$$ people have arrived. So for example given that you meet 6 new people this year, what's the expected amount of time you spend on hobbies?  Now evidently we don't actually know the number of new people you meet since its a Poisson process.  How do we account for that? We can condition the amount of time spent for every possible number of arrivals $$n$$.  This is simply summing up over all the conditional expectations. Let's let $$Y(t)$$ represent the total number of hours spent on hobbies as a function of time and N(t) represent the Poisson process for the arrival of new people.
+Well whenever the value of one variable depends on the value of another we can use conditional expectation. This would be the expected amount of money spent given that we know $$n$$ people have arrived. So for example given that you meet 6 new people this year, what's the expected amount of time you spend on hobbies?  Evidently we don't actually know the number of new people you meet since its a Poisson process.  How do we account for that? We can condition the amount of time spent for every possible number of arrivals $$n$$.  This is simply summing up over all the conditional expectations. Let's let $$Y(t)$$ represent the total number of hours spent on hobbies as a function of time and N(t) represent the Poisson process for the arrival of new people.
 
 $$E[Y(t)] = \sum_{n=0}^{\infty} E[Y(t) \mid N(t) = n] P(N(t) = n)$$
 
