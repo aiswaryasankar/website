@@ -1,0 +1,29 @@
+---
+layout: page
+short_name: AI
+name: Cryptography
+permalink: /crypto.html
+image: /stock_images/crypto.png
+---
+
+Cryptography is going to be such an important field in the future. Just watch and see all the applications to different fields. There are complex issues involved including sending messages, exchanging keys and so forth. Here I've broken up some of the challenges involved!
+
+<style>
+div.text {
+  padding-left: 50px;
+}
+</style>
+
+<br><br>
+<br>
+<hr>
+<br><br>
+<div>
+{% assign filtered_posts = site.posts | where: "topic", page.short_name %}
+  {% for post in filtered_posts %}
+     <h4 ><a href="{{ post.url }}">{{ post.title }}</a></h4>
+     <div class=text>
+     	<p>{{ post.excerpt | markdownify }}</p>
+     </div>
+{% endfor %}
+</div>
