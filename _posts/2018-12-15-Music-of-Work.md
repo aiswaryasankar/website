@@ -44,7 +44,7 @@ $$ \pi_{n+1} = \pi_{n} \begin{bmatrix}
 . & . & . & 
 \end{bmatrix} $$
 
-Here $$\pi$$ represents the distribution over the current states. Thus after multiplying by the transition matrix you get the distribution for the next time step. Now we want to find the distribution when the number of time steps goes to infinity. In this case as n goes to infinity this distribution converges to a stationary distribution, however this isn't always the case. Here's a quick detour regarding when the stationary distribution is the limiting distribution.
+Here $$\pi$$ represents the distribution over the current states. Thus after multiplying by the transition matrix you get the distribution for the next time step. Now we want to find the distribution when the number of time steps goes to infinity. In this case as n goes to infinity this distribution converges to a stationary distribution, however this isn't always the case. 
 <br>
 <br>
 As this $$30x30$$ matrix is very tedious to work with, we can instead use a more sparse representation of the transitions. Here we will let $$p$$ represent the probability of keeping the playlist and $$1-p$$ represent the probability of replacing it.

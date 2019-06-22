@@ -47,10 +47,3 @@ $$P(X_0 \leq a) = \sum_{j=k}^{n} F(x)^0 (1 - F(x))^{n}$$
 Against all odds (since everyone in the competition had the same rate of completing the exam this truly is quite a feat) my two friends and I do manage to each win first place in our batches. Now its time "to sweep" :D.  Here the stakes are high though and we each are honest about how quickly we think we can solve very complex problems. We each put forth our estimated rates and to preserve anonymity, let's say I take 65 minutes per hard problem, $$\lambda$$, Alice takes 50 minutes, $$\mu$$, and Eve takes 45 minutes $$\rho$$. 
 
 I bet we'll place in the order of our rates with 
-
-
-
-
-
-
-
