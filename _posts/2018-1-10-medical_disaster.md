@@ -7,7 +7,8 @@ topic: AI
 ---
 
 I was sitting on the patient bed, feet dangling down, my poker face nicely assembled.  My doctor was sitting not far from me having just wheeled away from touching around on my right foot.  She had spoken a bit, I had replied to some quesitons.  Most of it was inconsequential, and passed over me until she mentioned 'Osteonecrosis'. 
-    
+<br>
+
 I had long come to the internal agreement that whenever I sat in a doctor's room I would be completely expresionless as I found that to be the best way to show the detachment and absolute lack of power I had over the situation.  There was nothing I could do about my condition so I might as well act like it didn't concern me.  My brain though was whirling.  'Osteonecrosis' struck me.  "Osteo' was definitely 'bone' simple enough.  Now 'necrosis'.  The only thing that could be was something along the lines of 'necromancer', dark, evil.  I was busy coming up with different manipulations of the phrase when my doctor broke in and gave some further explanation probably on the request of my mother sitting on the stool in the corner of the room.  
     
 ​     "Bone death." Wasn't too far off I determined, there couldn't be much more evil or dark things that could happen to a bone after all.  Soon though after I'd finished reasoning through this to myself, lauding myself on my word dissection skills my brain shut off. 'Bone death'.  I didn't get to much more thinking past that.
