@@ -15,7 +15,7 @@ Ok first the expected number of restaurants visited will naturally depend on the
 Once I know the probability that there are a certain number, $$k$$ people going to get food I then need to determine the expected number of restaurants they visit.  Now each of these $$n$$ people individually choose the restaurant they want to eat at with equal probability.  If two people choose the same place, the expected number of places they visit remains the same. Given that the group splits off to get food from their desired location, <b><i>how can we compute the expected number of restaurants they visit?</i></b>
 <br><br>
 <h3>The Poisson</h3>
-Let's start by tackling the first question. We need a way to compute the probability that at a given moment of time there are $$n$$ people present and they arrive at a rate of $$\lambda$$ per hour.  How can we model this? We can first think of drawing this out as a graph. Each state represents the number of people in lab. Once again we don't have discrete transition probabilityes, but instead we have the probability of transitioning as a function of time.
+Let's start by tackling the first question. We need a way to compute the probability that at a given moment of time there are $$n$$ people present and they arrive at a rate of $$\lambda$$ per hour.  How can we model this? We can first think of drawing this out as a graph. Each state represents the number of people in lab. Let's make the assumption that once a person arrives, they don't leave until after lunch. Also once again we don't have discrete transition probabilities; instead we have the probability of transitioning as a function of time.
 
 <br>
 ![Poisson MC](/stock_images/ctmc_poisson.png){:style="float: center;margin-left: 150px; margin-top: 7px :height="550px" width="450px" :class="img-responsive"}
@@ -76,7 +76,7 @@ Essentially you want to split the Poisson process into multiple different Poisso
 ![Poisson MC](/stock_images/pois_splitting.png){:style="float: center;margin-left: 150px; margin-top: 7px :height="550px" width="450px" :class="img-responsive"}
 <br><br>
 
-Since people choose where to eat equally likely, you now have $$Pois(\frac{\lambda}{n})$$.  We know these are also Poisson because they follow the random exponentially distributed arrival times.  Now the problem lies in determining the number of unique restaurants visited. We can model this as an indicator variable $$Y$$.
+Since people choose where to eat with the same probability, you now have $$Pois(\frac{\lambda}{n})$$.  We know these are also Poisson because they follow the random exponentially distributed arrival times.  Now the problem lies in determining the number of unique restaurants visited. We can model this using the indicator variable $$Y$$.
 
 $$Y = 
 \left\{\begin{matrix}
@@ -85,7 +85,7 @@ $$Y =
 \end{matrix}\right.
 $$
 
-Lastly, how can we determine if there's at least one arrival in a Poisson Process?
+Now we need to use this to determine the probability that at least one person chooses a particular restaurant.  In other words how do we find the probability of one arrival in a Poisson process?
 
 $$P(X \geq 1) = 1 - P(X = 0) $$
 
@@ -103,5 +103,5 @@ $$E[Y] = 8(1-e^{\frac{-4}{8}})) $$
 
 $$E[Y] = 3.14$$ 
 
-We can expect to go to around 3 different restaurants!
+We can expect to go to around $$\pi$$ different restaurants!
 
