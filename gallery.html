@@ -3,7 +3,7 @@ layout: page
 title: Gallery
 permalink: /gallery.html
 images:
-  - image_path: /images/moon.jpg
+  - image_path: /images/night.jpg
     title: moon
     caption: Nighttime 
   - image_path: /images/lexington.jpg
@@ -162,21 +162,3 @@ div.desc {
 <div class="clearfix"></div>
 </body>
 </html>
-
-
-<!-- <html>
-<body>
-  {% for image in page.images %}
-  <div class="responsive">
-    <div class="gallery">
-      <a target="_blank" href="img_5terre.jpg">
-        <img src="{{ image.image_path }}" alt="{{ image.title }}" width="600" height="400">
-      </a>
-      <div class="desc">{{image.caption}}</div>
-    </div>
-  </div>
-  {% endfor %}
-
-{% include image-gallery.html folder="/images" %}
-</body>
-</html> -->
