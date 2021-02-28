@@ -15,7 +15,7 @@ How can you train a baseline model to perform language translation? One of the p
 
 
 
-<h1> The Conceptual Model<h1>
+<h1> The Conceptual Model</h1>
 
 For language translation, let's start off with a basic dataset which is a set of sentences in English with the corresponding translated sentences in Spanish. This is your training data. Your goal is to best predict the translated sentence given the input language sentence. First a lot of initial ideas to throw out the window - a precomputed mapping of word translations, passing a sentence as input and predicting an entire sentence as output, or even learning to directly map (think dictionary lookup) each word in the source language to another word in the target language. The last one is poor because you have no context from the rest of the sentence. Instead we will learn how to use all the information from the source sentence to predict each word individually in the output language. To get a holistic view of any problem, the first few pieces to put in place are the training data, evaluation metrics, and loss function - how do you measure differences between the predicted outputs and the actual outputs and then train the model to account for these mismatches. Since in this problem, one is trying to predict the output word by computing a probability distribution over all the possible words in the target language, the intuitive loss function here would be softmax - selecting the word with the highest probability and then checking if the predicted output word matches with the output word in the dataset. Common evaluation metrics for these tasks include ROUGE, BLEU and perplexity. We'll discuss them further towards the end of the article. But generally think computing a score of how many words were predicted accurately.
 
@@ -26,7 +26,7 @@ Great now to set up the model. The most common initial approach to model a seque
 
 
 
-<h1>The Mathematical Model<h1>
+<h1>The Mathematical Model</h1>
 
 
 
@@ -58,7 +58,7 @@ Now unlike the encoder, the decoder needs to process each of the target words on
 
 
 
-<h1>The Code<h1>
+<h1>The Code</h1>
 
 
 
