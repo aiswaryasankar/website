@@ -1,11 +1,11 @@
-//---
-//layout: post
-//title: Neural Machine Translation
-//date:   2021-2-12 11:43:09 -0800
-//categories: jekyll update
-//topic: nlp
-//image: /stock_images/NMT.png
-//---
+---
+layout: post
+title: Neural Machine Translation
+date:   2021-2-12 11:43:09 -0800
+categories: jekyll update
+topic: nlp
+image: /stock_images/NMT.png
+---
 
 How can you train a baseline model to perform language translation? One of the primary tasks of natural language processing that I first interacted with was Google Translate, a machine translation model that converts text in one language to another. What seemed insanely arcane to me at first has actually gotten to the point where one can now setup and train a model to do this from scratch. Let's try to build it up from a set of input sentences in one language to output sentences in another.
 
