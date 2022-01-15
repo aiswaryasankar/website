@@ -57,7 +57,7 @@ The RL framework can be addressed using several different algorithms which can b
 
 ## Policy Gradient
 
-Before diving into how the paper makes use of offline policy gradients to address the shortcomings of MLE, we will first give some background on policy gradient and mention how it relates to MLE. The goal of reinforcement learning can be formalized as finding the policy $\pi$ that maximizes the expected sum of rewards (if the policy is parameterized, then we are finding a parameterized policy $\pi_{\theta}$):
+Before diving into how the paper makes use of offline policy gradients to address the shortcomings of MLE, we will first give some background on policy gradient and mention how it relates to MLE. The goal of reinforcement learning can be formalized as finding the policy $$\pi$$ that maximizes the expected sum of rewards (if the policy is parameterized, then we are finding a parameterized policy $$\pi_{\theta}$$):
 
 $$
 J(\theta) = max_{\pi_{\theta}}~\mathbb{E}_{\tau \sim \pi_{\theta}} \Big[ \sum_{t=0}^{T} \gamma^t r_t \Big]
@@ -133,34 +133,34 @@ Before we dive into the algorithm's details, we provide a table of notations tha
 |            $$p_{MLE}$$                           |               Parameterized model trained using MLE               	|
 |             $$T$$             	                 |                            Text length                            	|
 |             $$x$$             	                 |                           Input context                           	|
-|             $y$             	                 |          Output sequence (either from model or reference)         	|
-| $y_t \in V$ (also denoted as $a_t$ ) 	         | Token index $t$ in output sequence (either from model or reference) 	|
-| $y_{\textit{model}}$ ($y_{\textit{model}, t}$) |           Model output sequence ($t^{th}$ token in sequence)         |
-| $y_{\textit{ref}}$ ($y_{\textit{ref}, t}$)     |         Reference output sequence ($t^{th}$ token in sequence)       |
-| $D =$ {$(x_i,y_i) \| 1 \leq i \leq  N$}        |     Dataset of demonstrations (set of context-reference pairs)    	|
-|              $N$             	                 |                   Number of demonstrations in $D$                   	|
-|             $s_t$                              |           State (in text generation, this is ($y_{0:t-1},x$)         |
-|  $\pi_{\theta}$              	                 |                      Policy parameterized by $\theta$                |
-|  $\pi_{b}$             	                     |            Behavior policy generating demonstrations $D$            	|
-|              $M$             	                 |                 Number of training steps for GOLD                 	|
-|              $b$             	                 |             Baseline used in RL for reducing variance             	|
+|             $$y$$             	                 |          Output sequence (either from model or reference)         	|
+| $$y_t \in V$$ (also denoted as $$a_t$$ ) 	         | Token index $$t$$ in output sequence (either from model or reference) 	|
+| $$y_{\textit{model}}$$ ($$y_{\textit{model}, t}$$) |           Model output sequence ($$t^{th}$$ token in sequence)         |
+| $$y_{\textit{ref}}$$ ($$y_{\textit{ref}, t}$$)     |         Reference output sequence ($$t^{th}$$ token in sequence)       |
+| $$D =$$ {$$(x_i,y_i) \| 1 \leq i \leq  N$$}        |     Dataset of demonstrations (set of context-reference pairs)    	|
+|              $$N$$             	                 |                   Number of demonstrations in $$D$$                   	|
+|             $$s_t$$                              |           State (in text generation, this is ($$y_{0:t-1},x$$)         |
+|  $$\pi_{\theta}$$              	                 |                      Policy parameterized by $$\theta$$                |
+|  $$\pi_{b}$$             	                     |            Behavior policy generating demonstrations $$D$$            	|
+|              $$M$$             	                 |                 Number of training steps for GOLD                 	|
+|              $$b$$             	                 |             Baseline used in RL for reducing variance             	|
 
 ## GOLD Algorithm
 
-The Generation by Off-policy Learning from Demonstrations (GOLD) algorithm is an off-policy and offline reinforcement learning method that fine-tunes text generation models trained using MLE. It specifically treats text generation as a sequential decision-making process, where the policy is to choose the next token $y_t \in V$ from $V$ given the *state* of the text $(y_{0:t-1},x)$ ($\pi_{\theta}(y_t\|s_t) = p(y_t\| y_{0:t-1},x)$), where $y_{0:t-1}$ is the history (either from the reference or model-generated). This policy is parameterized by $\theta$ which is updated using the policy gradient method and a set of demonstrations $D$ containing context-reference pairs.
+The Generation by Off-policy Learning from Demonstrations (GOLD) algorithm is an off-policy and offline reinforcement learning method that fine-tunes text generation models trained using MLE. It specifically treats text generation as a sequential decision-making process, where the policy is to choose the next token $$y_t \in V$$ from $$V$$ given the *state* of the text $$(y_{0:t-1},x)$$ ($$\pi_{\theta}(y_t\|s_t) = p(y_t\| y_{0:t-1},x)$$), where $$y_{0:t-1}$$ is the history (either from the reference or model-generated). This policy is parameterized by $\theta$ which is updated using the policy gradient method and a set of demonstrations $$D$$ containing context-reference pairs.
 
-While it is possible for GOLD to train a text generation model from scratch, there are some major difficulties with it. The action space in text generation is $V$, which can be exceptionally large (typically around $10^4$ tokens or more). This large action space is problematic for RL methods as the overall space it searches can be massive ($O(V^T)$, where $T$ is the average length of each text) and thus will take a longer time to converge to an optimal policy. To improve convergence speed, GOLD starts with a pretrained model and fine-tunes it rather than training one from scratch [(Ranzato et al., 2016)](#Ranzato2016), [(Keneshloo et al., 2019)](#Keneshloo2019).
+While it is possible for GOLD to train a text generation model from scratch, there are some major difficulties with it. The action space in text generation is $$V$$, which can be exceptionally large (typically around $$10^4$$ tokens or more). This large action space is problematic for RL methods as the overall space it searches can be massive ($$O(V^T)$$, where $$T$$ is the average length of each text) and thus will take a longer time to converge to an optimal policy. To improve convergence speed, GOLD starts with a pretrained model and fine-tunes it rather than training one from scratch [(Ranzato et al., 2016)](#Ranzato2016), [(Keneshloo et al., 2019)](#Keneshloo2019).
 
 ![GOLD-Algorithm](/stock_images/gold-alg-simple.png)
 
 A few things to note in the above algorithm:
-1. There are two policies. The first one is used for importance sampling and is denoted by $\pi_{b}$. The second one is the text generation policy that will be used for generating text during evaluation, denoted by $\pi_{\theta}$.
-2. The minibatch $B$ is sampled from a dataset of demonstrations $D$. Each $(s_i^t, a_i^t)$ is constructed from a single demonstration $(x_i,y_i) \in D$ as follows: ($s_i^t = (y_{0:t-1}, x), a_i^t = y_t$). Thus, each demonstration will provide $T$ $(s_i^t, a_i^t)$ pairs.
+1. There are two policies. The first one is used for importance sampling and is denoted by $$\pi_{b}$$. The second one is the text generation policy that will be used for generating text during evaluation, denoted by $$\pi_{\theta}$$.
+2. The minibatch $$B$$ is sampled from a dataset of demonstrations $$D$$. Each $$(s_i^t, a_i^t)$$ is constructed from a single demonstration $$(x_i,y_i) \in D$$ as follows: ($$s_i^t = (y_{0:t-1}, x), a_i^t = y_t$$). Thus, each demonstration will provide $$T$$ $$(s_i^t, a_i^t)$$ pairs.
 
 ## How GOLD uses Importance Sampling
-In offline RL, we are provided a set of demonstrations constructed from policy $\pi_{b}$, and we want to learn a policy $\pi_{\theta}$ given these demonstrations. One problem we have here is that the expected value of the return ${\hat Q}(s_t,a_t)$ is supposed to be computed using samples generated by $\pi_{\theta}$. However, we do not have this; rather, we have demonstrations generated by $\pi_{b}$. Thus, we utilize importance sampling to estimate the expectation of ${\hat Q}(s_t,a_t)$ under $\pi_{\theta}$ given samples from $\pi_{b}$.
+In offline RL, we are provided a set of demonstrations constructed from policy $$\pi_{b}$$, and we want to learn a policy $$\pi_{\theta}$$ given these demonstrations. One problem we have here is that the expected value of the return $${\hat Q}(s_t,a_t)$$ is supposed to be computed using samples generated by $$\pi_{\theta}$$. However, we do not have this; rather, we have demonstrations generated by $$\pi_{b}$$. Thus, we utilize importance sampling to estimate the expectation of $${\hat Q}(s_t,a_t)$$ under $$\pi_{\theta}$$ given samples from $$\pi_{b}$$.
 
-The weight at index $t$ used by importance sampling is computed as:
+The weight at index $$t$$ used by importance sampling is computed as:
 
 $$
 \begin{align*}
@@ -168,16 +168,16 @@ w_t = \prod_{t'=0}^{t}\frac{\pi_{\theta}(a_{t'}|s_{t'})}{\pi_{b}(a_{t'}|s_{t'})}
 \end{align*}
 $$
 
-Intuitively, this captures the probability ratio between the learned policy and the behavioral policy for tokens $y_{0:t}$. However, there are two problems with this equation:
-1. According to the paper, multiplying per-token importance weights for token indices $0$ to $t$ is sensitive to hyperparameters and takes longer to converge.
-2. We do not know $b$, only the demonstrations constructed by it.
+Intuitively, this captures the probability ratio between the learned policy and the behavioral policy for tokens $$y_{0:t}$$. However, there are two problems with this equation:
+1. According to the paper, multiplying per-token importance weights for token indices $$0$$ to $$t$$ is sensitive to hyperparameters and takes longer to converge.
+2. We do not know $$b$$, only the demonstrations constructed by it.
 
-To address (1), we can estimate the weights using its per-token form: $w_t =\frac{\pi_{\theta}(a_{t}\|s_{t})}{\pi_{b}(a_{t}\|s_{t})}$. While this estimate is biased, it has been shown to reduce variance and works reasonably well if both $\pi_{b}$ and $\pi_{\theta}$ are close [(Serban et al., 2017)](#Serban2017), [(Levine et al, 2020)](#Levine2020).
-To address (2), we can estimate $\pi_{b}$, but the paper instead assumes a uniform distribution $\pi_{b}(\tau)$ = 1/N, making $\pi_{b}(a_{t}|s_{t})$ constant. This assumption implies that each demonstration in the dataset is equally likely. This then changes the importance weight to $w_t = \pi_{\theta}(a_{t}\|s_{t})$.
+To address (1), we can estimate the weights using its per-token form: $$w_t =\frac{\pi_{\theta}(a_{t}\|s_{t})}{\pi_{b}(a_{t}\|s_{t})}$$. While this estimate is biased, it has been shown to reduce variance and works reasonably well if both $$\pi_{b}$$ and $$\pi_{\theta}$$ are close [(Serban et al., 2017)](#Serban2017), [(Levine et al, 2020)](#Levine2020).
+To address (2), we can estimate $$\pi_{b}$$, but the paper instead assumes a uniform distribution $$\pi_{b}(\tau)$$ = 1/N, making $$\pi_{b}(a_{t}|s_{t})$$ constant. This assumption implies that each demonstration in the dataset is equally likely. This then changes the importance weight to $$w_t = \pi_{\theta}(a_{t}\|s_{t})$$.
 
 ## Reward Functions
 
-The reward function $r_t = R(s_t, a_t)$ is what steers GOLD to find an optimal policy and thus has a big impact on the performance of a model trained by GOLD. Ideally, we want the reward function to represent the perceptual quality of text (how likely a human would have generated the text given a context) [(Huszar, 2015)](#Huszar2015), [(Hashimoto et al., 2019)](#Hashimoto2019),
+The reward function $$r_t = R(s_t, a_t)$$ is what steers GOLD to find an optimal policy and thus has a big impact on the performance of a model trained by GOLD. Ideally, we want the reward function to represent the perceptual quality of text (how likely a human would have generated the text given a context) [(Huszar, 2015)](#Huszar2015), [(Hashimoto et al., 2019)](#Hashimoto2019),
 so that our learned policy generates text that a human would generate. To this end, three different reward functions are introduced which fall into two categories: *sequence-level reward* and *token-level reward*.
 
 **Sequence-level reward**: This reward function only provides a reward if the entire demonstration constructed by the model is in the dataset (this does not make assumptions about the likelihood of the demonstrations in the dataset; all are equally likely):
@@ -189,20 +189,20 @@ R(s_t,a_t) := \begin{cases}
 \end{cases}
 $$
 
-This function is sparse in that it will only be non-zero exactly $N$ times, where $N$ is the number of demonstrations in $D$. RL methods do not do well with sparse rewards as a reward of 0 does not provide any learning signal. Their experiments (summarized in [MLE vs GOLD](#mle-vs-gold)) even show that GOLD with this reward function (referred to as GOLD-$\delta$) performs worse than the reward functions that we describe next, which are less sparse.
+This function is sparse in that it will only be non-zero exactly $$N$$ times, where $$N$$ is the number of demonstrations in $$D$$. RL methods do not do well with sparse rewards as a reward of 0 does not provide any learning signal. Their experiments (summarized in [MLE vs GOLD](#mle-vs-gold)) even show that GOLD with this reward function (referred to as GOLD-$$\delta$$) performs worse than the reward functions that we describe next, which are less sparse.
 
 **Token-level reward**: The previous reward function assumes all demonstrations in the dataset are equally likely. However, in text generation tasks, a context can have multiple correct outputs (e.g. if our context is a news article, there can be multiple, different correct summaries of it), each of which can be associated with a probability based on the tokens it contains. This implies then that a context’s reference (text that we want the model to generate) also has a probability associated with it.
 
-To assign a probability to each of the references, we can use an approximation of text perceptual quality, specifically the MLE solution $p_{MLE}$. According to the paper, $p_{MLE}$ is a reasonable approximation to text perceptual quality when $p_{MLE}$ is restricted only to the demonstrations. Given this estimation, two reward functions are defined based on how they are applied to the value function ${\hat Q}(s_t,a_t)$:
+To assign a probability to each of the references, we can use an approximation of text perceptual quality, specifically the MLE solution $$p_{MLE}$$. According to the paper, $$p_{MLE}$$ is a reasonable approximation to text perceptual quality when $$p_{MLE}$$ is restricted only to the demonstrations. Given this estimation, two reward functions are defined based on how they are applied to the value function $${\hat Q}(s_t,a_t)$$:
 
-1. **${\hat Q}(s_t,a_t)$ is a product of probabilities**: $R_p(s,a) := log~p_{MLE}(a\|s)$ and ${\hat Q}(s_t,a_t) = \sum_{t'=t}^{T}\gamma^{t'-t} log~p_{MLE}(a_{t'}\|s_{t'})$. A sequence will have high reward only if every token has a high likelihood under $p_{MLE}$. Thus, we can think of this as a "strict" reward in that there is no room for errors. GOLD with this reward function is referred to as GOLD-$p$ in the paper.
+1. **$${\hat Q}(s_t,a_t)$$ is a product of probabilities**: $$R_p(s,a) := log~p_{MLE}(a\|s)$$ and $${\hat Q}(s_t,a_t) = \sum_{t'=t}^{T}\gamma^{t'-t} log~p_{MLE}(a_{t'}\|s_{t'})$. A sequence will have high reward only if every token has a high likelihood under $$p_{MLE}$$. Thus, we can think of this as a "strict" reward in that there is no room for errors. GOLD with this reward function is referred to as GOLD-$$p$$ in the paper.
 
-2. **${\hat Q}(s_t,a_t)$ is a sum of probabilities**: $R_s(s,a) := p_{MLE}(a\|s)$ and ${\hat Q}(s_t,a_t) = \sum_{t'=t}^{T}\gamma^{t'-t} p_{MLE}(a_{t'}\|s_{t'})$ A sequence can have high reward even if one of the tokens is not very likely under $p_{MLE}$ as the low-likelihood token will be marginalized out during summation. In contrast to (1), this reward is more lenient in that there is room for some errors. GOLD with this reward function is referred to as GOLD-$s$ in the paper. 
+2. **$${\hat Q}(s_t,a_t)$$ is a sum of probabilities**: $$R_s(s,a) := p_{MLE}(a\|s)$$ and $${\hat Q}(s_t,a_t) = \sum_{t'=t}^{T}\gamma^{t'-t} p_{MLE}(a_{t'}\|s_{t'})$$ A sequence can have high reward even if one of the tokens is not very likely under $$p_{MLE}$$ as the low-likelihood token will be marginalized out during summation. In contrast to (1), this reward is more lenient in that there is room for some errors. GOLD with this reward function is referred to as GOLD-$$s$$ in the paper. 
 
 ## Why GOLD does Offline RL vs Online RL
 Online RL usually utilizes exploration methods to discover new courses of action in an environment. However, exploration can be detrimental for text generation as it may yield text that has zero reward (e.g. text that is syntactically incorrect). For example, if we have a news article that we want to summarize, exploration could yield summaries that are off-topic. Furthermore, the large action space in text generation makes exploration challenging as space of syntactically incorrect text is most likely larger than the space of syntactically correct text. Thus, we do not want any exploration, but we do want to keep as close as possible to the provided demonstrations.
 
-Offline RL makes sense to use then as it focuses on learning a policy based only on demonstrations. Another advantage with offline RL is that the environment dynamics are known and deterministic in text generation (i.e. the transition from state $y_{0:t-1}$ to $y_{0:t}$ is done by appending $y_t$ to $y_{0:t-1}$). Thus, there is no need to interact with an environment to get the next state.
+Offline RL makes sense to use then as it focuses on learning a policy based only on demonstrations. Another advantage with offline RL is that the environment dynamics are known and deterministic in text generation (i.e. the transition from state $$y_{0:t-1}$$ to $$y_{0:t}$$ is done by appending $$y_t$$ to $$y_{0:t-1}$$). Thus, there is no need to interact with an environment to get the next state.
 
 ## Training Objective
 Recall that the training objective for policy gradient aims to find a policy  that maximizes the expected cumulative reward:
@@ -211,13 +211,13 @@ $$
 J(\theta)=max_{\pi_{\theta}}\mathbb{E}_{\tau \sim \pi_{\theta}} \Big[\sum_{t=0}^{T}\gamma^{t}r_t\Big]
 $$
 
-Recall from [Background](#background) that taking the gradient of this objective function yields the following (instead of $R(\tau)$, we have ${\hat Q}(s_t,a_t)$):
+Recall from [Background](#background) that taking the gradient of this objective function yields the following (instead of $$R(\tau)$$, we have $${\hat Q}(s_t,a_t)$$):
 
 $$
 \nabla J(\theta)= \mathbb{E}_{\tau \sim \pi_{\theta}} \Big[\sum_{t=0}^{T} \nabla_{\theta}~log(\pi_{\theta}(a_t|s_t)){\hat Q}(s_t,a_t)\Big]
 $$
 
-Adding the approximated importance sampling weight $\tilde{\pi}_{\theta}(s_t,a_t)$ yields the final gradient:
+Adding the approximated importance sampling weight $$\tilde{\pi}_{\theta}(s_t,a_t)$$ yields the final gradient:
 
 $$
 \nabla J(\theta)= \mathbb{E}_{\tau \sim \pi_{\theta}} \Big[\sum_{t=0}^{T} max(u, \tilde{\pi}_{\theta}(a_t|s_t))\nabla_{\theta}~log(\pi_{\theta}(a_t|s_t)){\hat Q}(s_t,a_t)\Big]
@@ -227,7 +227,7 @@ $$
 \nabla J(\theta) \approx \sum_{i=0}^{|B|} \Big[\sum_{t=0}^{T} max(u, \tilde{\pi}_{\theta}(a^i_t|s^i_t))\nabla_{\theta}~log(\pi_{\theta}(a^i_t|s^i_t)){\hat Q}(s^i_t,a^i_t)\Big]
 $$
 
-where the importance sampling weight is lower-bounded by $u$. One thing to note here is that the parameters for the policy used in importance sampling $\tilde{\pi}\_{\theta}$ is kept frozen and thus is not updated by the gradient. This policy is, however, periodically updated to be the main policy $\pi_{\theta}$ in the GOLD algorithm. Another thing to note here is that ${\hat Q}$ and $\tilde{\pi}\_{\theta}$ utilizes references from the demonstration dataset (i.e. $y_{0:t-1}$ from $s^i_t = (y_{0:t-1}, x)$ are references) while $\pi_{\theta}$ uses model-generated outputs (i.e. $y_{0:t-1}$ from $s^i_t=(y_{0:t-1}, x)$ are model-generated outputs).
+where the importance sampling weight is lower-bounded by $$u$$. One thing to note here is that the parameters for the policy used in importance sampling $$\tilde{\pi}\_{\theta}$$ is kept frozen and thus is not updated by the gradient. This policy is, however, periodically updated to be the main policy $$\pi_{\theta}$$ in the GOLD algorithm. Another thing to note here is that $${\hat Q}$$ and $$\tilde{\pi}\_{\theta}$$ utilizes references from the demonstration dataset (i.e. $$y_{0:t-1}$$ from $$s^i_t = (y_{0:t-1}, x)$$ are references) while $$\pi_{\theta}$$ uses model-generated outputs (i.e. $$y_{0:t-1}$$ from $$s^i_t=(y_{0:t-1}, x)$$ are model-generated outputs).
 
 # MLE vs GOLD
 
@@ -244,13 +244,13 @@ We will mainly focus on the overall findings in this blog post. More specific ex
 
 ## MLE vs GOLD - Transformer and Non-Transformer Models
 
-GOLD was first compared against MLE for two off-the-shelf non-Transformer models: NQG++ [(Zhou et al., 2017)](#Zhou2017) for NQG and Pointer Generator Network (PGN) [(See et al.)](#See2017) for extractive summarization (i.e. NQG++ and PGN were trained either with GOLD or MLE). Overall, their results indicated that NQG and PGN trained using GOLD will achieve better BLEU and ROGUE scores than MLE. One interesting thing to note here is that this improvement is at the cost of perplexity; for NQG, MLE had 29.25 compared to 158.45 for the GOLD-$s$ variant (lower perplexity is better). GOLD was then compared against two Transformer models: pretrained BART [(Lewis et al, 2020)](#Lewis2020) for NQG, and extractive and extreme summarization, and the original Transformer [(Vaswani et al., 2017)](#Vaswani2017) for machine translation. Their results indicate that BART and the Transformer trained using GOLD will achieve better BLEU and ROGUE scores than MLE. Similar to the non-Transformer model, this performance gain is at the cost of perplexity.
+GOLD was first compared against MLE for two off-the-shelf non-Transformer models: NQG++ [(Zhou et al., 2017)](#Zhou2017) for NQG and Pointer Generator Network (PGN) [(See et al.)](#See2017) for extractive summarization (i.e. NQG++ and PGN were trained either with GOLD or MLE). Overall, their results indicated that NQG and PGN trained using GOLD will achieve better BLEU and ROGUE scores than MLE. One interesting thing to note here is that this improvement is at the cost of perplexity; for NQG, MLE had 29.25 compared to 158.45 for the GOLD-$$s$$ variant (lower perplexity is better). GOLD was then compared against two Transformer models: pretrained BART [(Lewis et al, 2020)](#Lewis2020) for NQG, and extractive and extreme summarization, and the original Transformer [(Vaswani et al., 2017)](#Vaswani2017) for machine translation. Their results indicate that BART and the Transformer trained using GOLD will achieve better BLEU and ROGUE scores than MLE. Similar to the non-Transformer model, this performance gain is at the cost of perplexity.
 
 ## MLE vs GOLD - Human Evaluation
 
 In addition to the standard metrics in the literature, sentences generated by GOLD+BART were compared against MLE+BART from a human standpoint. The tasks used in these experiments were NQG, ESUM, and XSUM. Specifically, human evaluation was crowdsourced using Amazon Mechanical Turk, where 200 pairs of examples were created for each of the three tasks and each of the three tasks were done by 15 unique evaluators.
 
-**NQG Evaluation**: A source paragraph, the questions generated by the MLE-trained model and GOLD-$s$-trained model, and the words in the paragraph that answered the generated questions were presented to each evaluator. Each evaluator was then asked to determine which question was better, or if there was a tie.
+**NQG Evaluation**: A source paragraph, the questions generated by the MLE-trained model and GOLD-$$s$$-trained model, and the words in the paragraph that answered the generated questions were presented to each evaluator. Each evaluator was then asked to determine which question was better, or if there was a tie.
 
 **ESUM/XSUM Evaluation**: A reference summary of an article, and a summary generated by the MLE-trained model and GOLD-s-model were presented to each
 evaluator. Each evaluator was then asked to determine which summary was closer in meaning to the reference summary.
