@@ -47,7 +47,7 @@ We begin by providing some background on the RL concepts that we will see in thi
 
 # Background
 
-From the initial $n$-gram language models to the various iterations on Transformer based language models of today, language generation has long formulated itself as essentially a maximum likelihood estimation (MLE) problem. The question we ask when using MLE is: given the history of $n$ words $x_1, \dots x_i$ from a sentence $x = \langle x_1, \dots, x_n \rangle$, how likely will a generation model predict $x_{i+1}$ next?. MLE formalizes this question by computing the probability distribution over the entire vocabulary of next possible words and choosing the word with the highest probability. 
+From the initial $$n$$-gram language models to the various iterations on Transformer based language models of today, language generation has long formulated itself as essentially a maximum likelihood estimation (MLE) problem. The question we ask when using MLE is: given the history of $$n$$ words $$x_1, \dots x_i$$ from a sentence $$x = \langle x_1, \dots, x_n \rangle$$, how likely will a generation model predict $$x_{i+1}$$ next?. MLE formalizes this question by computing the probability distribution over the entire vocabulary of next possible words and choosing the word with the highest probability. 
 
 Despite its wide adoption for text generation, MLE does have a few limitations. In addition to the limitations presented in the previous section, MLE also doesn’t allow for any exploration - at each time step the likelihood is maximized and that is selected as the next output. This greedy next word selection approach is generally addressed through beam search or nucleus sampling; however it still retains the same core problem. In order to address this, we can instead reformulate the text generation problem as a Reinforcement Learning (RL) problem. 
 
@@ -63,7 +63,7 @@ $$
 J(\theta) = max_{\pi_{\theta}}~\mathbb{E}_{\tau \sim \pi_{\theta}} \Big[ \sum_{t=0}^{T} \gamma^t r_t \Big]
 $$
 
-We will now derive the policy gradient update from this objective function. Let $\tau = \langle s_0, a_0, \dots , s_T, a_T \rangle$ denote a path or a trajectory (i.e. state-action sequence) and the reward function over this path as $R(\tau) = \sum_{t=0}^{T} R(s_t, a_t)$. First, let's start by taking the gradient with respect to $\theta$:
+We will now derive the policy gradient update from this objective function. Let $$\tau = \langle s_0, a_0, \dots , s_T, a_T \rangle$$ denote a path or a trajectory (i.e. state-action sequence) and the reward function over this path as $$R(\tau) = \sum_{t=0}^{T} R(s_t, a_t)$$. First, let's start by taking the gradient with respect to $$\theta$$:
 
 $$
 \begin{align*}
@@ -74,13 +74,13 @@ $$
 \end{align*}
 $$
 
-where $P(\tau; \theta) = \prod_{t=0}^{T} P(s_{t+1} \| s_t, a_t) \pi_{\theta}(a_t \| s_t)$. Now we approximate with the empirical estimate for $M$ sample paths under policy $\pi_{\theta}$.
+where $$P(\tau; \theta) = \prod_{t=0}^{T} P(s_{t+1} \| s_t, a_t) \pi_{\theta}(a_t \| s_t)$$. Now we approximate with the empirical estimate for $$M$$ sample paths under policy $$\pi_{\theta}$$.
 
 $$
 \nabla_{\theta} J(\theta) \approx \frac{1}{M} \sum_{i=1}^{M} \nabla_{\theta}~log P(\tau^i; \theta) R(\tau^i)
 $$
 
-This is valid even when $R$ is discontinuous and you have a discrete set of paths. Now we can calculate the probability of a path. This consists of taking the product of the dynamics model or the probability of transitioning from a state given the current state and the applied action:
+This is valid even when $$R$$ is discontinuous and you have a discrete set of paths. Now we can calculate the probability of a path. This consists of taking the product of the dynamics model or the probability of transitioning from a state given the current state and the applied action:
 
 $$
 \begin{align*}
@@ -89,7 +89,7 @@ $$
 \end{align*}
 $$
 
-The dynamics model isn’t needed in this case because it doesn’t depend on $\theta$ and thus:
+The dynamics model isn’t needed in this case because it doesn’t depend on $$\theta$$ and thus:
 
 $$
 \nabla_{\theta} log~P(\tau^i; \theta) = \nabla_{\theta} \sum_{t=0}^{T} log~\pi_{\theta} (a_t^i | s_t^i)
@@ -101,11 +101,11 @@ $$
 \nabla_{\theta} J(\theta) = \mathbb{E}_{\tau \sim \pi_{\theta}} \Big[ \sum_{t=0}^{T} log~\pi_{\theta}(a_t|s_t) R(\tau) \Big]
 $$
 
-Compared to the MLE objective, this is the exact same equation except that the policy gradient update equation includes $R(\tau)$ whereas MLE doesn’t. With policy gradients, the agent is able to explore and thus needs to receive a reward for the action whereas with MLE there is only one possible action to take which is the maximum likelihood with reward 1.
+Compared to the MLE objective, this is the exact same equation except that the policy gradient update equation includes $$R(\tau)$$ whereas MLE doesn’t. With policy gradients, the agent is able to explore and thus needs to receive a reward for the action whereas with MLE there is only one possible action to take which is the maximum likelihood with reward 1.
 
 ## Off-Policy vs On-Policy Learning
 
-Given that we now understand the connection between policy gradient and MLE, we now turn our focus to on-policy learning and, the method that GOLD uses, off-policy learning. On-policy RL samples from the current policy when deciding next actions whereas off-policy RL samples from an another policy. This distinction can be made for value based, model based and policy gradient RL approaches. For example, within value based RL, Q-learning is an off policy approach whereas SARSA (state-action-reward-state-action) is on policy. This is because Q-learning uses $\epsilon$-greedy as the policy to determine actions which is different from the current learned policy. SARSA instead uses the current policy in order to determine actions. A similar paradigm applies to policy gradient approaches.
+Given that we now understand the connection between policy gradient and MLE, we now turn our focus to on-policy learning and, the method that GOLD uses, off-policy learning. On-policy RL samples from the current policy when deciding next actions whereas off-policy RL samples from an another policy. This distinction can be made for value based, model based and policy gradient RL approaches. For example, within value based RL, Q-learning is an off policy approach whereas SARSA (state-action-reward-state-action) is on policy. This is because Q-learning uses $$\epsilon$$-greedy as the policy to determine actions which is different from the current learned policy. SARSA instead uses the current policy in order to determine actions. A similar paradigm applies to policy gradient approaches.
 
 If training samples are collected through the policy we try to optimize for, it is called an on-policy algorithm. However, this means that we cannot use training samples from previous training steps, as they were collected with a different version of the policy. This is where off-policy algorithms have an advantage: off-policy algorithms do not require that the training samples are collected with the current policy. Off-policy algorithms have a “behavior policy” that is used to collect training samples to train the “target policy.” Having a behavior policy allows the agent to be more explorative while collecting experience. Furthermore, an off-policy algorithm allows the agent to save and reuse past experience for better sample efficiency.
 
@@ -113,13 +113,13 @@ Despite its advantages, off-policy policy gradient does also come with a problem
 
 ## Importance Sampling
 
-Importance sampling is a technique of estimating the expected value of a function $f(x)$ where $x$ has a data distribution $p$ using samples another distribution $q$:
+Importance sampling is a technique of estimating the expected value of a function $$f(x)$$ where $$x$$ has a data distribution $$p$$ using samples another distribution $$q$$:
 
 $$
 \mathbb{E}_p[f(x)] = \mathbb{E}_q (\frac{f(X)p(X)}{q(X)})
 $$
 
-In the context of RL, importance sampling estimates the value functions for a policy $\pi$ with samples collected previously from another, possibly older policy $\pi'$. Calculating the total rewards of taking an action is often very expensive, and thus if the new action is relatively close to the old one, importance sampling allows us to calculate the new rewards based on the old calculation. Otherwise, whenever we update the policy $\pi$, you’d need to collect a completely new trajectory to calculate the expected rewards. When the current policy diverges from the old policy too much, the accuracy decreases and both policies need to be resynced regularly. In this situation a trust-region is defined as the region for which the approximation is still accurate enough for those new policies within the region.
+In the context of RL, importance sampling estimates the value functions for a policy $$\pi$$ with samples collected previously from another, possibly older policy $$\pi'$$. Calculating the total rewards of taking an action is often very expensive, and thus if the new action is relatively close to the old one, importance sampling allows us to calculate the new rewards based on the old calculation. Otherwise, whenever we update the policy $$\pi$$, you’d need to collect a completely new trajectory to calculate the expected rewards. When the current policy diverges from the old policy too much, the accuracy decreases and both policies need to be resynced regularly. In this situation a trust-region is defined as the region for which the approximation is still accurate enough for those new policies within the region.
 
 # Training for GOLD
 
@@ -129,10 +129,10 @@ Before we dive into the algorithm's details, we provide a table of notations tha
 
 |           Symbol           	                 |                              Meaning                              	|
 |:----------------------------------------------:|:-----------------------------------------------------------------:	|
-|             $V$             	                 |                     Vocabulary (set of tokens)                    	|
-|            $p_{MLE}$                           |               Parameterized model trained using MLE               	|
-|             $T$             	                 |                            Text length                            	|
-|             $x$             	                 |                           Input context                           	|
+|             $$V$$             	                 |                     Vocabulary (set of tokens)                    	|
+|            $$p_{MLE}$$                           |               Parameterized model trained using MLE               	|
+|             $$T$$             	                 |                            Text length                            	|
+|             $$x$$             	                 |                           Input context                           	|
 |             $y$             	                 |          Output sequence (either from model or reference)         	|
 | $y_t \in V$ (also denoted as $a_t$ ) 	         | Token index $t$ in output sequence (either from model or reference) 	|
 | $y_{\textit{model}}$ ($y_{\textit{model}, t}$) |           Model output sequence ($t^{th}$ token in sequence)         |
