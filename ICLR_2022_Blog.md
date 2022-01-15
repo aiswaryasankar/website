@@ -22,7 +22,7 @@ In this blog post, we will go over the [ICLR 2021 paper titled *Text Generation 
 
 # The Problem with Text Generation via MLE
 
-![Text-Gen-Diagram](/public/images/2021-12-01-text-gen-via-lfd/text-gen-diagram.png)
+![Text-Gen-Diagram](/stock_images/text-gen-diagram.png)
 
 The standard method for language generation relies on autoregressive models learned using an MLE objective function. Autoregressive models generate text sequentially by predicting the next token to generate based on a history (i.e. previously-generated tokens). The above image provides an example of how an autoregressive model generates a translation of the English text “This is a blog post” to its Spanish counterpart: “Esta es una publicación de blog.”
 
