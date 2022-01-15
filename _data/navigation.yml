@@ -3,7 +3,7 @@
 - name: Blog
   link: /blog.html
 - name: Research
-  link: /_posts/ICLR_2022_Blog.md
+  link: /ICLR_2022_Blog.md
 - name: Experience
   link: /experience.html
 - name: Bookshelf
