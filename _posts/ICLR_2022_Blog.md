@@ -1,7 +1,9 @@
 ---
+topic: research
 layout: post
 title: An Understanding of Learning from Demonstrations for Neural Text Generation
 authors: (Blind Review)
+date: 2022-01-15
 tags: [Text Generation, Reinforcement Learning, Learning from Demonstration]  # This should be the relevant areas related to your blog post
 ---
 
@@ -149,7 +151,7 @@ The Generation by Off-policy Learning from Demonstrations (GOLD) algorithm is an
 
 While it is possible for GOLD to train a text generation model from scratch, there are some major difficulties with it. The action space in text generation is $V$, which can be exceptionally large (typically around $10^4$ tokens or more). This large action space is problematic for RL methods as the overall space it searches can be massive ($O(V^T)$, where $T$ is the average length of each text) and thus will take a longer time to converge to an optimal policy. To improve convergence speed, GOLD starts with a pretrained model and fine-tunes it rather than training one from scratch [(Ranzato et al., 2016)](#Ranzato2016), [(Keneshloo et al., 2019)](#Keneshloo2019).
 
-![GOLD-Algorithm](/public/images/2021-12-01-text-gen-via-lfd/gold-alg-simple.png)
+![GOLD-Algorithm](/stock_images/gold-alg-simple.png)
 
 A few things to note in the above algorithm:
 1. There are two policies. The first one is used for importance sampling and is denoted by $\pi_{b}$. The second one is the text generation policy that will be used for generating text during evaluation, denoted by $\pi_{\theta}$.
