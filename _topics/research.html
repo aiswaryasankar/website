@@ -1,0 +1,34 @@
+---
+layout: page
+short_name: research
+title: Blog
+name: Research
+permalink: /research.html
+image: /stock_images/probability.png
+---
+<style>
+div.text {
+  padding-left: 50px;
+}
+</style>
+<br>
+This covers NLP blog posts and papers I've worked on in the recent past. My general area of interest lies in multi document summarization and fact based text generation and retrieval. 
+<br><br>
+<hr>
+<br>
+
+<div>
+{% assign filtered_posts = site.posts | where: "topic", page.short_name %}
+  {% for post in filtered_posts %}
+  <br>
+     <h2 ><a href="{{ post.url }}">{{ post.title }}</a></h2>
+     <br>
+     <center><img src="{{post.image}}" style="padding-left:25px; height:75%; width:75%;"></center>
+     <div class=text>
+     	<p>{{ post.excerpt | markdownify }}</p>
+     </div>
+     <div align="right"><p>{{ post.date | date: '%B %d, %Y' }}</p></div>
+     <br><br><br>
+{% endfor %}
+</div>
+
